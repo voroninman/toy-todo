@@ -5,6 +5,7 @@ Disclaimers:
 - This code shouldn't be considered production ready.
 - Still WIP.
 - Consists of code that 'recreates the wheel'.
+- The data keeps on the client side via cookie-sessions.
 
 ## It's my attempt to reproduce the path of Reflux creation.
 
@@ -37,5 +38,6 @@ gunicorn  --pythonpath app server:app --log-file=-
 
 - 'Mark all as done' action
 - Reorder the items
+- Write functional tests for API
 
 
