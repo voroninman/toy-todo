@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Todo App</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='build/css/app.css') }}"/>
+</head>
+<body>
+<main>
+
+  <header>
+    <h3>Todos</h3>
+  </header>
+
+  <form class="form">
+    <input type="text" name="text" placeholder="What needs to be done?"/>
+    <button type="submit">Add Todo</button>
+  </form>
+
+  <div class="list-container"></div>
+  <div class="footer-container"></div>
+
+</main>
+<script>
+  var state = {
+    todoItems: {{ todos|tojson|safe }}
+  };
+</script>
+<script src="{{ url_for('static', filename='build/js/app.js') }}"></script>
+</body>
+</html>
