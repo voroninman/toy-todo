@@ -43,7 +43,7 @@ var Footer = React.createClass({
     return (
       <footer>
         <p>{count} items left</p>
-        <a href="">Mark all as complete</a>
+        <a href="" onClick={this.props.onClickMarkAllDone}>Mark all as complete</a>
       </footer>
     );
   }
@@ -65,6 +65,13 @@ $.extend(View.prototype, EventMixin, {
       self.trigger('add', { text: text });
     });
   },
+  onClickMarkAllDone: function() {
+    var self = this;
+    return function(item) {
+      self.trigger('markAllDone');
+      return false;
+    };
+  },
   onItemChange: function() {
     var self = this;
     return function(item) {
@@ -77,7 +84,7 @@ $.extend(View.prototype, EventMixin, {
       document.getElementsByClassName('list-container')[0]
     );
     React.render(
-      <Footer items={todoItems}/>,
+      <Footer items={todoItems} onClickMarkAllDone={this.onClickMarkAllDone()}/>,
       document.getElementsByClassName('footer-container')[0]
     );
   }

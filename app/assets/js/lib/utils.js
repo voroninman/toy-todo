@@ -27,7 +27,17 @@ var createStateItem = function(state, item) {
   return item;
 };
 
+var markAllDone = function(state) {
+  var _state = state.get();
+  for (var i=0, l=_state.todoItems.length; i < l; i++) {
+    _state.todoItems[i].done = true;
+  }
+  state.trigger('patch', { done: true });
+  state.set(_state);
+};
+
 module.exports = {
   updateStateItem: updateStateItem,
-  createStateItem: createStateItem
+  createStateItem: createStateItem,
+  markAllDone: markAllDone
 };

@@ -32,6 +32,14 @@ class TodoResource(Resource):
 
 class TodoListResource(Resource):
 
+    def patch(self):
+        if 'todo' not in session:
+            session['todo'] = []
+        diff = request.json
+        for todo in session['todo']:
+            todo.update(diff)
+        return None, 204
+
     def get(self):
         if 'todo' not in session:
             session['todo'] = []

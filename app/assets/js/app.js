@@ -38,6 +38,19 @@ state.on('add', function(tmp_id, item) {
     throw new Error('The server went crazy.');
   });
 });
+state.on('patch', function(patch) {
+  $.ajax({
+    url: '/todo',
+    type: 'patch',
+    data: JSON.stringify(patch),
+    contentType : 'application/json',
+    dataType: 'json'
+  })
+  .fail(function() {
+    throw new Error('The server went crazy.');
+  });
+});
+
 
 state.set(window.state);
 
@@ -46,4 +59,7 @@ view.on('add', function(item) {
 });
 view.on('change', function(item) {
   utils.updateStateItem(state, item.id, item);
+});
+view.on('markAllDone', function() {
+  utils.markAllDone(state);
 });
