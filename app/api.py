@@ -20,14 +20,13 @@ class TodoResource(Resource):
         return todo
 
 
-    def put(self, todo_id):
+    def patch(self, todo_id):
         session_todo = session_lookup(todo_id)
         if session_todo is None:
             abort(404)
-        todo = request.json
-        todo['id'] = todo_id
-        session['todo'][session['todo'].index(session_todo)] = todo
-        return todo
+        diff = request.json
+        session['todo'][session['todo'].index(session_todo)].update(diff)
+        return None, 204
 
 
 class TodoListResource(Resource):
@@ -53,4 +52,3 @@ class TodoListResource(Resource):
         todo['id'] = todo_id
         session['todo'].append(todo)
         return todo
-

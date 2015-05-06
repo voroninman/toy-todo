@@ -1,43 +1,22 @@
 var $ = require('jquery');
 
-var updateStateItem = function(state, id, item) {
-  var _state = state.get();
-  var idx;
+$(document).ajaxError(function() {
+  throw new Error('The server went crazy.');
+});
 
-  for (var i=0, l=_state.todoItems.length; i < l; i++) {
-    if (_state.todoItems[i].id == id) {
-      idx = i;
-      break;
-    }
-  }
-  _state.todoItems[idx] = item;
-  state.set(_state);
-  state.trigger('change', item);
-  return item;
-};
-
-var createStateItem = function(state, item) {
-  var tmp_id = Math.random().toString(36).substring(2, 7);
-  var _state = state.get();
-
-  $.extend(item, { id: tmp_id });
-  _state.todoItems.push(item);
-  state.set(_state);
-  state.trigger('add', tmp_id, item);
-  return item;
-};
-
-var markAllDone = function(state) {
-  var _state = state.get();
-  for (var i=0, l=_state.todoItems.length; i < l; i++) {
-    _state.todoItems[i].done = true;
-  }
-  state.trigger('patch', { done: true });
-  state.set(_state);
+var ajaxCall = function(method, path, data, cb) {
+  cb = cb || function(res) {
+    console.log('Ajax succeed:', method.toUpperCase(), path, data);
+  };
+  $.ajax({
+    url: path,
+    type: method,
+    data: JSON.stringify(data),
+    contentType: 'application/json',
+    dataType: 'json'
+  }).done(cb);
 };
 
 module.exports = {
-  updateStateItem: updateStateItem,
-  createStateItem: createStateItem,
-  markAllDone: markAllDone
+  ajaxCall: ajaxCall
 };

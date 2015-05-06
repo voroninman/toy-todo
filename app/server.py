@@ -24,4 +24,4 @@ api.add_resource(TodoListResource, '/todo')
 api.add_resource(TodoResource, '/todo/<string:todo_id>')
 
 if __name__ == '__main__':
-    app.run(static_files={'/': '../public'})
+    app.run(static_files={'/': '../public'}, debug=True)
