@@ -6,21 +6,20 @@ var actionCreator = require('../actions/actionCreator');
 
 function TodoStore() {
   this._items = [];
-  actionCreator.subscribe('checkItem', this.update.bind(this));
+  actionCreator.subscribe('checkItem', this.checkItem.bind(this));
   actionCreator.subscribe('addItem', this.add.bind(this));
   actionCreator.subscribe('markAllDone', this.markAllDone.bind(this));
+  actionCreator.subscribe('itemGetId', this.itemGetId.bind(this));
 }
 
 TodoStore.prototype = _.extend(EventEmitter, {
-  update: function(id, isDone) {
+  checkItem: function(id, isDone) {
     _.extend(this._items[_.findIndex(this._items, { id: id })], { done: isDone });
     this.emit('change');
-    console.log('Updated');
   },
-  add: function(text) {
-    this._items.push({ id: '', text: text, done: false });
+  add: function(text, tmpId) {
+    this._items.push({ text: text, done: false, tmpId: tmpId });
     this.emit('change');
-    console.log('Added');
   },
   set: function(items) {
     this._items = items;
@@ -30,11 +29,16 @@ TodoStore.prototype = _.extend(EventEmitter, {
     return this._items;
   },
   markAllDone: function() {
-    debugger;
     var self = this;
     _.each(this._items, function(__, idx) {
       _.extend(self._items[idx], { done: true });
     });
+    this.emit('change');
+  },
+  itemGetId: function(tmpId, id) {
+    var item = this._items[_.findIndex(this._items, { tmpId: tmpId })];
+    _.extend(item, { id: id });
+    delete item['tmpId'];
     this.emit('change');
   }
 });

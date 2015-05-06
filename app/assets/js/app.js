@@ -25,6 +25,7 @@ $('.form').on('submit', function(e) {
   var $input = $(this).find('input');
   var val = $input.val();
   if (! val) { return; }
-  actionCreator.create('addItem', val);
+  var tmpId = Math.random().toString(36).substr(2, 7);
+  actionCreator.create('addItem', val, tmpId);
   $input.val('');
 });

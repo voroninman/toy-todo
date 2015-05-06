@@ -7,8 +7,10 @@ actionCreator.subscribe('checkItem', function(id, isDone) {
   ajaxCall('patch', '/todo/' + id, { done: isDone });
 });
 
-actionCreator.subscribe('addItem', function(text) {
-  ajaxCall('post', '/todo', { text: text });
+actionCreator.subscribe('addItem', function(text, tmpId) {
+  ajaxCall('post', '/todo', { text: text, tmpId: tmpId }, function(item) {
+    actionCreator.create('itemGetId', tmpId, item.id);
+  });
 });
 
 actionCreator.subscribe('markAllDone', function () {

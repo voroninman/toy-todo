@@ -47,8 +47,8 @@ class TodoListResource(Resource):
     def post(self):
         if 'todo' not in session:
             session['todo'] = []
-        todo_id = str(uuid4())
         todo = request.json
-        todo['id'] = todo_id
+        todo['id'] = str(uuid4())
+        del todo['tmpId']
         session['todo'].append(todo)
         return todo
