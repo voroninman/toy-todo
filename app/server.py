@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, session
 from flask.ext.restful import Api
-from api import TodoResource, TodoListResource
+from api import TodoResource, TodoListResource, OrderResource
 
 app = Flask(__name__, static_folder='../public/')
 app.secret_key = os.environ.get('SECRET_KEY', '!this_is_110%_SECRET_key')
@@ -22,6 +22,7 @@ def static_proxy(path):
 
 api.add_resource(TodoListResource, '/todo')
 api.add_resource(TodoResource, '/todo/<string:todo_id>')
+api.add_resource(OrderResource, '/order')
 
 if __name__ == '__main__':
-    app.run(static_files={'/': '../public'}, debug=True)
+    app.run(static_files={'/': '../public'})

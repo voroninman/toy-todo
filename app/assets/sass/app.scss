@@ -58,14 +58,15 @@ header {
   padding: 20px;
   input {
     @extend %grey_border;
+    width: 281px;
     padding: 0 12px;
     font-size: 14px;
     box-shadow: inset 1px 1px 5px 0 $black_15;
-    width: 40%;
   }
   button {
     @extend %grey_border;
-    width: 20%;
+    width: 145px;
+    margin-left: 3px;
     font-size: 13px;
     font-weight: bold;
     padding: 0 12px;
@@ -76,16 +77,16 @@ header {
 }
 
 .list {
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  p {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  &-empty {
     padding: 0 20px 17px;
     margin: 0;
     font-size: 13px;
   }
+
   li {
     margin: 0;
     padding: 17px 20px;

@@ -13,6 +13,10 @@ actionCreator.subscribe('addItem', function(text, tmpId) {
   });
 });
 
-actionCreator.subscribe('markAllDone', function () {
+actionCreator.subscribe('markAllDone', function() {
   ajaxCall('patch', '/todo', { done: true });
+});
+
+actionCreator.subscribe('itemMove', function(oldIndex, newIndex) {
+  ajaxCall('post', '/order', { old: oldIndex, new: newIndex });
 });

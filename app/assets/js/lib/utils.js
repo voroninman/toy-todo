@@ -1,7 +1,11 @@
 var $ = require('jquery');
 
-$(document).ajaxError(function() {
-  throw new Error('The server went crazy.');
+$(document).ajaxError(function(e, jqXHR) {
+  switch (jqXHR.status) {
+    case 500:
+      throw new Error('The server went crazy.');
+      break;
+  }
 });
 
 var ajaxCall = function(method, path, data, cb) {

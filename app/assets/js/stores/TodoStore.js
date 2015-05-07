@@ -12,13 +12,13 @@ function TodoStore() {
   actionCreator.subscribe('itemGetId', this.itemGetId.bind(this));
 }
 
-TodoStore.prototype = _.extend(EventEmitter, {
+ _.extend(TodoStore.prototype, EventEmitter, {
   checkItem: function(id, isDone) {
     _.extend(this._items[_.findIndex(this._items, { id: id })], { done: isDone });
     this.emit('change');
   },
   add: function(text, tmpId) {
-    this._items.push({ text: text, done: false, tmpId: tmpId });
+    this._items.unshift({ text: text, done: false, tmpId: tmpId });
     this.emit('change');
   },
   set: function(items) {
@@ -29,9 +29,8 @@ TodoStore.prototype = _.extend(EventEmitter, {
     return this._items;
   },
   markAllDone: function() {
-    var self = this;
-    _.each(this._items, function(__, idx) {
-      _.extend(self._items[idx], { done: true });
+    _.each(this._items, function(item) {
+      _.extend(item, { done: true });
     });
     this.emit('change');
   },

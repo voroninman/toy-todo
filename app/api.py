@@ -50,5 +50,19 @@ class TodoListResource(Resource):
         todo = request.json
         todo['id'] = str(uuid4())
         del todo['tmpId']
-        session['todo'].append(todo)
+        session['todo'].insert(0, todo)
         return todo
+
+
+class OrderResource(Resource):
+
+    def post(self):
+        if 'todo' not in session:
+            session['todo'] = []
+        try:
+            old_idx, new_idx = request.json['old'], request.json['new']
+        except KeyError:
+            abort(400)
+        item = session['todo'].pop(old_idx)
+        session['todo'].insert(new_idx, item)
+        return None, 204

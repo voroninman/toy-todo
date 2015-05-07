@@ -20,7 +20,7 @@ Consider the following implementation as the proper one: https://github.com/spoi
 
 #### Dependencies
 
-- `Python 2.7+`
+- `Python 2.7+, 3.3+, PyPy`
 - `virtualenvwrapper`
 - `npm`
 
@@ -36,8 +36,5 @@ gunicorn  --pythonpath app server:app --log-file=-
 
 #### TODO
 
-- 'Mark all as done' action
-- Reorder the items
 - Write functional tests for API
-
-
+- Make /order call RESTful
